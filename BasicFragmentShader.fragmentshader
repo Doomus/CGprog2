@@ -6,5 +6,5 @@ out vec3 color;
 void main()
 {
 	// Output color = red 
-	color = vec3(gl_FragCoord.x, gl_FragCoord.y, gl_FragCoord.z);
+	color = vec3( .6, 3, 1.28);//gl_FragCoord.x, gl_FragCoord.y, gl_FragCoord.z);
 }

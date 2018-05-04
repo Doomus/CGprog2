@@ -4,43 +4,48 @@ namespace {
 	double currentFrame = glfwGetTime();
 	double lastFrame = currentFrame;
 	double deltaTime;
+	
+	
+	float Ang = 0;
 
-	auto quadpos = glm::vec3(1, 0, 0);
-
-	glm::mat4 TransformQuad() {
+	glm::mat4 TransformObj() {
 
 		//keyboard input handle here
-
+		glm::mat4 model;
+		auto objPos = glm::vec3(0, 0, 0);
 		int state = glfwGetKey(window, GLFW_KEY_RIGHT);
 		if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
-			quadpos += glm::vec3(1 * deltaTime, 0, 0);
+			objPos += glm::vec3(1 * deltaTime, 0, 0);
 		}
-		else if (glfwGetKey(window, GLFW_KEY_LEFT)) {
-			quadpos -= glm::vec3(1 * deltaTime, 0, 0);
+		if (glfwGetKey(window, GLFW_KEY_LEFT)) {
+			objPos -= glm::vec3(1 * deltaTime, 0, 0);
 		}
-		else if (glfwGetKey(window, GLFW_KEY_UP)) {
-			quadpos += glm::vec3(0, 1 * deltaTime, 0);
+		if (glfwGetKey(window, GLFW_KEY_UP)) {
+			objPos += glm::vec3(0, 1 * deltaTime, 0);
 		}
-		else if (glfwGetKey(window, GLFW_KEY_DOWN)) {
-			quadpos -= glm::vec3(0, 1 * deltaTime, 0);
+		if (glfwGetKey(window, GLFW_KEY_DOWN)) {
+			objPos -= glm::vec3(0, 1 * deltaTime, 0);
 		}
-		else if (glfwGetKey(window, GLFW_KEY_BACKSPACE)) {
-			quadpos -= glm::vec3(0, 0, 1);
+		if (glfwGetKey(window, GLFW_KEY_BACKSPACE)) {
+			objPos -= glm::vec3(0, 0, 1);
 		}
-		else {
-			quadpos = glm::vec3(0, 0, 0);
+		if (glfwGetKey(window, GLFW_KEY_SPACE)) {
+			Ang += 50 * deltaTime; 
 		}
+		
 		//matrix math here
 
-		glm::mat4 model;  //identity matrix...
-		model = glm::translate(model, quadpos);
+						
+		//identity matrix...
+		//model = glm::translate(model, objPos);
+	
+		model = glm::rotate(model, Ang, vec3(2, 4, 0));		//moves quad
+
+
+		
 
 		return model;
 
-		//
-		//if (state == GLFW_PRESS)
-		// activate_airship();
-		
 	}
 
 	
@@ -61,6 +66,7 @@ void BeginRendering()
 
 	GLuint triangleID = LoadTriangle();
 	GLuint quadID = LoadQuad();
+	GLuint cubeID = LoadCube();
 
 	
 
@@ -76,8 +82,8 @@ void BeginRendering()
 		
 
 		//RenderTriangle(triangleID);
-		RenderQuad(quadID, programID, TransformQuad());
-
+		//RenderQuad(quadID, programID, TransformQuad());
+		RenderCube(cubeID, programID, TransformObj());
 		//Update();
 		//Render();
 		glfwSwapBuffers(window);
@@ -115,6 +121,12 @@ void RenderQuad(GLuint vertexBuffer, GLuint programID, glm::mat4 model) {
 	RenderVertex(vertexBuffer, programID, model);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDisableVertexAttribArray(0);
+}
+void RenderCube(GLuint vertexBuffer, GLuint programID, glm::mat4 model) {
+	RenderVertex(vertexBuffer, programID, model);
+
+	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glDisableVertexAttribArray(0);
 }
 
