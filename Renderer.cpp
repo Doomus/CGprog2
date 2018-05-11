@@ -7,13 +7,13 @@ namespace {
 	
 	
 	float Ang = 0;
-
+	auto objPos = glm::vec3(0, 0, 0);
 	glm::mat4 TransformObj() {
 
 		//keyboard input handle here
 		glm::mat4 model;
-		auto objPos = glm::vec3(0, 0, 0);
-		int state = glfwGetKey(window, GLFW_KEY_RIGHT);
+		
+		
 		if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
 			objPos += glm::vec3(1 * deltaTime, 0, 0);
 		}
@@ -39,7 +39,7 @@ namespace {
 		//identity matrix...
 		//model = glm::translate(model, objPos);
 	
-		model = glm::rotate(model, Ang, vec3(2, 4, 0));		//moves quad
+		model = glm::rotate(model, Ang, vec3(1, 1, 0));		//moves quad
 
 
 		
@@ -68,7 +68,8 @@ void BeginRendering()
 	GLuint quadID = LoadQuad();
 	GLuint cubeID = LoadCube();
 
-	
+	ObjLoader::ObjData data;
+	(void)ObjLoader::Load("Dice.obj", data);
 
 
 	do {
@@ -126,7 +127,7 @@ void RenderQuad(GLuint vertexBuffer, GLuint programID, glm::mat4 model) {
 void RenderCube(GLuint vertexBuffer, GLuint programID, glm::mat4 model) {
 	RenderVertex(vertexBuffer, programID, model);
 
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDrawArrays(GL_TRIANGLES, 0, 60);
 	glDisableVertexAttribArray(0);
 }
 

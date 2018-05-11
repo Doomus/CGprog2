@@ -74,11 +74,13 @@
     <ClCompile Include="Init.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="ObjData.cpp" />
     <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="ObjData.h" />
     <ClInclude Include="Renderer.h" />
   </ItemGroup>
   <ItemGroup>
